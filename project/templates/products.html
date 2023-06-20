@@ -5,6 +5,32 @@ Products
 {% endblock title %}
 
 {% block content %}
-<h1>Все товары</h1>
-{{ products }}
+    <h1>Все товары</h1>
+    <h3>{{ time_now|date:'M d Y' }}</h3>
+    <h3>{{next_sale|default_if_none:"Чуть позже сообщим о распродаже!" }}</h3>
+    <hr>
+    {% if products %}
+        <table>
+
+            <tr>
+                <td>Название</td>
+                <td>Описание</td>
+                <td>Категория</td>
+                <td>Цена</td>
+                <td>Количество</td>
+            </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description|truncatewords:2 }}</td>
+            <td>{{ product.category.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.quanity }}</td>
+        </tr>
+        {% endfor %}
+
+        </table>
+    {% else %}
+        <h2>Товаров нет!</h2>
+    {% endif %}
 {% endblock content %}
