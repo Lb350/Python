@@ -5,6 +5,19 @@ Posts
 {% endblock title %}
 
 {% block content %}
-<h1>Все новости</h1>
-{{ posts }}
+<h1>Все новости  ({{posts|length}})</h1>
+    <hr>
+    {% if posts %}
+        <table>
+        {% for post in posts %}
+
+            <tr><td><h5>{{ post.title }}</h5></td></tr>
+            <tr><td>{{ post.time_in|date:'d M Y' }}</td></tr>
+            <tr><td><i>{{ post.text_post|truncatewords:20 }}</i></td></tr>
+
+        {% endfor %}
+        </table>
+    {% else %}
+        <h2>Новостей нет!</h2>
+    {% endif %}
 {% endblock content %}

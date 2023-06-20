@@ -5,7 +5,16 @@ Post
 {% endblock title %}
 
 {% block content %}
-<h1>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h1>
-{{ post }}
-<h1>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h1>
+<h1>{{ post.title }}</h1>
+{{ post.time_in|date:'d M Y' }}
+    <hr>
+        <table>
+
+            <tr><td><i>{{ post.text_post}}</i></td></tr>
+
+        </table>
+    <hr>
 {% endblock content %}
+
+
+
