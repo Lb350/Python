@@ -41,6 +41,8 @@ Products
     {% else %}
         <h2>Товаров нет!</h2>
     {% endif %}
+
+
     {% if page_obj.has_previous %}
         <a href="?{% url_replace page=1 %}">1</a>
         {% if page_obj.previous_page_number != 1 %}

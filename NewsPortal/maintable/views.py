@@ -9,6 +9,7 @@ class PostList(ListView):
     template_name = 'posts.html'
     context_object_name = 'posts'
     time_in = 'time_in'
+    paginate_by = 10
 
 
 class PostDetail(DetailView):
