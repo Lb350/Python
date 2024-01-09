@@ -24,10 +24,12 @@ class PostDetail(DetailView):
 
 
 
-class PostSearch(ListView):
-    model = Post
+class PostSearch(PostList):
     template_name = 'search.html'
     context_object_name = 'search'
+
+
+
 
     def get_queryset(self):
         queryset = super().get_queryset()

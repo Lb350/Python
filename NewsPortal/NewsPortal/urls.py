@@ -5,4 +5,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('pages/', include('django.contrib.flatpages.urls')),
     path('posts/', include('maintable.urls')),
+    path('search/', include('maintable.urls')),
+
 ]

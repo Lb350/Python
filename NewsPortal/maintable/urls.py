@@ -4,5 +4,5 @@ from .views import PostList, PostDetail,PostSearch, PostEdit, PostCreate, PostDe
 urlpatterns = [
     path('', PostList.as_view()),
     path('<int:pk>', PostDetail.as_view()),
-    path('news/search/', PostSearch.as_view())
+    path('search/', PostSearch.as_view()),
 ]
