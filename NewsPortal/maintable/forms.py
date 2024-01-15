@@ -9,6 +9,9 @@ class PostForm(forms.ModelForm):
         fields = [
             'title',
             'author',
-            'type_paper',
+            'text_post',
+            'connect_categories',
+
         ]
+        # type_paper = 'NWS'
 

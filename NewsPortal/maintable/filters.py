@@ -2,6 +2,7 @@ from django_filters import FilterSet, DateFilter
 from .models import Post
 from django import forms
 
+
 class PostFilter(FilterSet):
     time_in = DateFilter(
         field_name='time_in',

@@ -7,7 +7,6 @@ from django import forms
 from django.urls import reverse_lazy
 
 
-
 class PostList(ListView):
     model = Post
     ordering = '-time_in'
@@ -23,13 +22,9 @@ class PostDetail(DetailView):
     context_object_name = 'post'
 
 
-
 class PostSearch(PostList):
     template_name = 'search.html'
     context_object_name = 'search'
-
-
-
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -42,10 +37,18 @@ class PostSearch(PostList):
         return context
 
 
-class PostCreate(CreateView):
+class NewsCreate(CreateView):
+    model = Post
     form_class = PostForm
-    template_name = 'create.html'
-    context_object_name = 'create'
+    template_name = 'news_create.html'
+    context_object_name = 'news_create'
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        if self.request.path == 'posts/articles/create/':
+            post.type_paper = 'ART'
+        post.save()
+        return super().form_valid(form)
 
 
 class PostEdit(UpdateView):
@@ -59,6 +62,17 @@ class PostDelete(DeleteView):
     template_name = 'delete.html'
     context_object_name = 'delete'
     success_url = reverse_lazy('post_list')
+
+
+class ArticlesCreate(CreateView):
+    form_class = PostForm
+    model = Post
+    template_name = 'articles_create.html'
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.type_paper = 'ART'
+        return super().form_valid(form)
 
 
 

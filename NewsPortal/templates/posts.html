@@ -17,6 +17,7 @@ Posts
             <tr><td><h5>{{ post.title|censor_filter }}</h5></td></tr>
             <tr><td>{{ post.time_in|date:'d M Y' }}</td></tr>
             <tr><td><i>{{ post.text_post|truncatewords:20 }}</i></td></tr>
+            <tr><td>{{ post.get_type_paper_display }}</td></tr>
 
         {% endfor %}
         </table>

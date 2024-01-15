@@ -2,10 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
+from django.urls import reverse
 
 class Author(models.Model):
     user_rating = models.IntegerField(default=0)
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def update_rating(self):
         articles_rating = Post.objects.filter(author_id=self.pk).aggregate(sum_articles = Coalesce(Sum('rating_post') * 3, 0))['sum_articles']
@@ -55,6 +56,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.text_post.title()
+
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)])
 
 
 class PostCategory(models.Model):
