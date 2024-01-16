@@ -51,10 +51,10 @@ class NewsCreate(CreateView):
         return super().form_valid(form)
 
 
-class PostEdit(UpdateView):
+class NewsEdit(UpdateView):
     form_class = PostForm
-    template_name = 'edit.html'
-    context_object_name = 'edit'
+    template_name = 'news_edit.html'
+    context_object_name = 'news_edit'
 
 
 class PostDelete(DeleteView):
@@ -73,6 +73,12 @@ class ArticlesCreate(CreateView):
         post = form.save(commit=False)
         post.type_paper = 'ART'
         return super().form_valid(form)
+
+
+class ArticlesEdit(UpdateView):
+    form_class = PostForm
+    template_name = 'articles_edit.html'
+    context_object_name = 'articles_edit'
 
 
 

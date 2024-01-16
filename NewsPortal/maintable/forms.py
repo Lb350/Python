@@ -10,7 +10,6 @@ class PostForm(forms.ModelForm):
             'title',
             'author',
             'text_post',
-            'connect_categories',
 
         ]
         # type_paper = 'NWS'
