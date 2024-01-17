@@ -1,9 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post, Category
+from .models import Post
 from .filters import PostFilter
 from .forms import PostForm
-from django import forms
 from django.urls import reverse_lazy
 
 
@@ -22,13 +21,16 @@ class PostDetail(DetailView):
     context_object_name = 'post'
 
 
-class PostSearch(PostList):
+class PostSearch(ListView):
+    model = Post
+    ordering = 'time_in'
     template_name = 'search.html'
     context_object_name = 'search'
+    paginate_by = 10
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        self.filterset = PostFilter(self.request.GET, queryset)
+        self.filterset = PostFilter(self.request.GET, queryset=queryset)
         return self.filterset.qs
 
     def get_context_data(self, **kwargs):
@@ -51,23 +53,24 @@ class NewsCreate(CreateView):
         return super().form_valid(form)
 
 
+class ArticlesCreate(CreateView):
+    form_class = PostForm
+    model = Post
+    template_name = 'articles_create.html'
+
+
 class NewsEdit(UpdateView):
+    model = Post
     form_class = PostForm
     template_name = 'news_edit.html'
     context_object_name = 'news_edit'
 
 
-class PostDelete(DeleteView):
+class ArticlesEdit(UpdateView):
     model = Post
-    template_name = 'delete.html'
-    context_object_name = 'delete'
-    success_url = reverse_lazy('post_list')
-
-
-class ArticlesCreate(CreateView):
     form_class = PostForm
-    model = Post
-    template_name = 'articles_create.html'
+    template_name = 'articles_edit.html'
+    context_object_name = 'articles_edit'
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -75,10 +78,23 @@ class ArticlesCreate(CreateView):
         return super().form_valid(form)
 
 
-class ArticlesEdit(UpdateView):
-    form_class = PostForm
-    template_name = 'articles_edit.html'
-    context_object_name = 'articles_edit'
+class NewsDelete(DeleteView):
+    model = Post
+    template_name = 'news_delete.html'
+    context_object_name = 'news_delete'
+    success_url = reverse_lazy('post_list')
+
+class ArticlesDelete(DeleteView):
+    model = Post
+    template_name = 'articles_delete.html'
+    context_object_name = 'articles_delete'
+    success_url = reverse_lazy('post_list')
+
+
+
+
+
+
 
 
 

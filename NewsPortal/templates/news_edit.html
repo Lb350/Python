@@ -3,9 +3,9 @@
 {% block content %}
 <h1>Редактировать новость</h1>
 <hr>
-<form action="" method="post">
+<form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Save" />
+    <button type="submit">Сохранить</button>
 </form>
-{% endblock content %}
+{% endblock %}
