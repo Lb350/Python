@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from .models import Post
 from .filters import PostFilter
 from .forms import PostForm
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class PostList(ListView):
@@ -66,7 +67,7 @@ class NewsEdit(UpdateView):
     context_object_name = 'news_edit'
 
 
-class ArticlesEdit(UpdateView):
+class ArticlesEdit(LoginRequiredMixin, UpdateView):
     model = Post
     form_class = PostForm
     template_name = 'articles_edit.html'
@@ -84,11 +85,16 @@ class NewsDelete(DeleteView):
     context_object_name = 'news_delete'
     success_url = reverse_lazy('post_list')
 
+
 class ArticlesDelete(DeleteView):
     model = Post
     template_name = 'articles_delete.html'
     context_object_name = 'articles_delete'
     success_url = reverse_lazy('post_list')
+
+
+class ProtectedView(LoginRequiredMixin, TemplateView):
+    template_name = 'protected_page.html'
 
 
 
