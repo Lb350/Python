@@ -63,7 +63,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.request',
             ],
         },
     },
@@ -133,10 +132,11 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/news/profile/'
-LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGIN_URL = '/sign/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/sign/login/'
 
+ACCOUNT_FORMS = {'signup': 'sign.models.CommonSignupForm'}
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
@@ -144,4 +144,4 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
-
+SITE_URL = 'http://127.0.0.1:8000'

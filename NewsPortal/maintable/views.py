@@ -4,8 +4,9 @@ from .models import Post
 from .filters import PostFilter
 from .forms import PostForm
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 class PostList(ListView):
     model = Post
@@ -92,7 +93,7 @@ class ArticlesDelete(DeleteView):
     context_object_name = 'articles_delete'
     success_url = reverse_lazy('post_list')
 
-
+@method_decorator(login_required, name='dispatch')
 class ProtectedView(LoginRequiredMixin, TemplateView):
     template_name = 'protected_page.html'
 
