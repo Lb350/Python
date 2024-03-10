@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
+
 class PostList(ListView):
     model = Post
     ordering = '-time_in'
@@ -41,7 +42,8 @@ class PostSearch(ListView):
         return context
 
 
-class NewsCreate(CreateView):
+class NewsCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('maintable.add_post',)
     model = Post
     form_class = PostForm
     template_name = 'news_create.html'
@@ -55,20 +57,23 @@ class NewsCreate(CreateView):
         return super().form_valid(form)
 
 
-class ArticlesCreate(CreateView):
+class ArticlesCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('maintable.add_post',)
     form_class = PostForm
     model = Post
     template_name = 'articles_create.html'
 
 
-class NewsEdit(UpdateView):
+class NewsEdit(PermissionRequiredMixin, UpdateView):
+    permission_required = ('maintable.change_post',)
     model = Post
     form_class = PostForm
     template_name = 'news_edit.html'
     context_object_name = 'news_edit'
 
 
-class ArticlesEdit(LoginRequiredMixin, UpdateView):
+class ArticlesEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = ('maintable.change_post',)
     model = Post
     form_class = PostForm
     template_name = 'articles_edit.html'
@@ -80,14 +85,16 @@ class ArticlesEdit(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class NewsDelete(DeleteView):
+class NewsDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('maintable.delete_post',)
     model = Post
     template_name = 'news_delete.html'
     context_object_name = 'news_delete'
     success_url = reverse_lazy('post_list')
 
 
-class ArticlesDelete(DeleteView):
+class ArticlesDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('maintable.delete_post',)
     model = Post
     template_name = 'articles_delete.html'
     context_object_name = 'articles_delete'

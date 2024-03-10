@@ -3,8 +3,8 @@
 {% block content %}
 <h2>Страница авторизованного пользователя {{request.user.username}}</h2>
 <div> Здесь может содержаться персональная информация для каждого пользователя </div>
-{% if is_not_premium %}
-<button> <a href="sign/upgrade/"> Хочу стать Premium!</a> </button>
+{% if is_not_authors %}
+<button> <a href="upgrade"> Стать автором</a> </button>
 {% endif %}
-<button> <a href="sign/logout/">Выйти</a> </button>
+<button> <a href="logout">Выйти</a> </button>
 {% endblock %}
