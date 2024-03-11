@@ -1,12 +1,12 @@
-from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
-from .models import Post
+from .models import Post, Category
 from .filters import PostFilter
 from .forms import PostForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, render
 
 
 class PostList(ListView):
@@ -105,13 +105,37 @@ class ProtectedView(LoginRequiredMixin, TemplateView):
     template_name = 'protected_page.html'
 
 
+class CategoryListView(PostList):
+    model = Post
+    template_name = 'posts/category_list.html'
+    context_object_name = 'category_posts_list'
+
+    def get_queryset(self):
+        self.category = get_object_or_404(Category, id=self.kwargs['pk'])
+        queryset = Post.objects.filter(category=self.category).order_by('-time_in')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_not_subscriber'] = self.request.user not in self.category.subscribers.all()
+        context['category'] = self.category
+        return context
 
 
+@login_required
+def subscribe(request, pk):
+    user = request.user
+    category = Category.objects.get(id=pk)
+    category.subscribers.add(user)
+
+    message = 'Активирована подписка на '
+    return render(request, 'posts/subscribe.html', {'category': category, 'message': message})
 
 
+def unsubscribe(request, pk):
+    user = request.user
+    category = Category.objects.get(id=pk)
+    category.subscribers.remove(user)
 
-
-
-
-
-
+    message = 'You have successfully unsubscribed from the category newsletter'
+    return render(request, 'posts/subscribe.html', {'category': category, 'message': message})

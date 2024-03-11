@@ -1,16 +1,18 @@
-from django import forms
+from django.forms import ModelForm, CheckboxSelectMultiple
 from .models import Post
 
 
-class PostForm(forms.ModelForm):
+class PostForm(ModelForm):
 
     class Meta:
         model = Post
         fields = [
             'title',
             'author',
+            'category',
             'text_post',
 
         ]
+        widgets = {'category': CheckboxSelectMultiple}
         # type_paper = 'NWS'
 

@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'maintable',
+    'maintable.apps.MaintableConfig',
     'django_filters',
     'sign',
     'allauth',
@@ -143,5 +143,16 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'al3xe1.k'
+EMAIL_HOST_PASSWORD = 'ufmgrmxbbxqbitae'
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = 'lb350@lb350.ru'
+ADMINS = [
+    ('Boss', 'lb3509@gmail.com')
+]
+
 
 SITE_URL = 'http://127.0.0.1:8000'

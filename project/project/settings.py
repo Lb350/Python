@@ -122,3 +122,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'al3xe1.k'
+EMAIL_HOST_PASSWORD = 'ufmgrmxbbxqbitae'
+EMAIL_USE_SSL = True

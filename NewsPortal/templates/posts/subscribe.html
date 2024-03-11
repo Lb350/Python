@@ -1,0 +1,6 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+    <h3 class="text-center">{{ message }} {{ category }}</h3>
+    <input type="button" value="Back" onclick="location.href='{% url 'category_list' category.id %}'">
+{% endblock content %}
