@@ -30,6 +30,11 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'simpleapp',
     'django_filters',
+    'appointments',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 
 ]
 
@@ -59,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -96,7 +102,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -128,3 +137,6 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = 'al3xe1.k'
 EMAIL_HOST_PASSWORD = 'ufmgrmxbbxqbitae'
 EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = ''
+SITE_ID = 1

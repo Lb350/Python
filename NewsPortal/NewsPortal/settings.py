@@ -149,7 +149,7 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = 'al3xe1.k'
 EMAIL_HOST_PASSWORD = 'ufmgrmxbbxqbitae'
 EMAIL_USE_SSL = True
-DEFAULT_FROM_EMAIL = 'lb350@lb350.ru'
+DEFAULT_FROM_EMAIL = 'al3xe1.k@yandex.ru'
 ADMINS = [
     ('Boss', 'lb3509@gmail.com')
 ]
