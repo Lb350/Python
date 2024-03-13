@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
+from django.core.mail import send_mail
 
 
 class PostList(ListView):
@@ -71,6 +72,13 @@ class NewsEdit(PermissionRequiredMixin, UpdateView):
     template_name = 'news_edit.html'
     context_object_name = 'news_edit'
 
+    def dispatch(self, request, *args, **kwargs):
+        post = self.get_object()
+        context = {'post_id': post.pk}
+        if post.author.user != self.request.user:
+            return render(self.request, template_name='post_lock.html', context=context)
+        return super(NewsEdit, self).dispatch(request, *args, **kwargs)
+
 
 class ArticlesEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = ('maintable.change_post',)
@@ -78,6 +86,13 @@ class ArticlesEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = PostForm
     template_name = 'articles_edit.html'
     context_object_name = 'articles_edit'
+
+    def dispatch(self, request, *args, **kwargs):
+        post = self.get_object()
+        context = {'post_id': post.pk}
+        if post.author.user != self.request.user:
+            return render(self.request, template_name='post_lock.html', context=context)
+        return super(ArticlesEdit, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -105,10 +120,12 @@ class ProtectedView(LoginRequiredMixin, TemplateView):
     template_name = 'protected_page.html'
 
 
-class CategoryListView(PostList):
+class CategoryListView(ListView):
     model = Post
     template_name = 'posts/category_list.html'
     context_object_name = 'category_posts_list'
+
+
 
     def get_queryset(self):
         self.category = get_object_or_404(Category, id=self.kwargs['pk'])

@@ -9,4 +9,3 @@ class MaintableConfig(AppConfig):
     def ready(self):
         import maintable.dispatch
 
-

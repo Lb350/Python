@@ -13,7 +13,7 @@ Posts
     Категории
 </td>
     {% if is_not_subscriber %}
-        <p class="text-center"><a href="{% url 'subscribe' category.id %}" class="btn btn-secondary bt-sm">Подписаться</a></p>
+        <p class="text-center"><a href="{% url 'subscribe' category.id %}" class="btn btn-secondary bt-sm">Подписаться на {{ category }}</a></p>
     {% endif %}
     <hr>
     {% if category_posts_list %}

@@ -9,6 +9,9 @@ class Author(models.Model):
     user_rating = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'{self.user}'
+
     def update_rating(self):
         articles_rating = Post.objects.filter(author_id=self.pk).aggregate(sum_articles = Coalesce(Sum('rating_post') * 3, 0))['sum_articles']
         comments_rating = Comment.objects.filter(comment_user_id=self.user).aggregate(sum_articles=Coalesce(Sum('rating_comment'), 0))['sum_articles']
@@ -19,7 +22,7 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=255,unique=True)
-    subscribers = models.ManyToManyField(User, related_name='categories')
+    subscribers = models.ManyToManyField(User, blank=True, related_name='categories')
 
     def __str__(self):
         return self.name.title()
