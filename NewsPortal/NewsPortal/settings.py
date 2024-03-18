@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'maintable.apps.MaintableConfig',
     'django_filters',
     'sign',
+    'django_apscheduler',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -156,5 +157,7 @@ ADMINS = [
     ('Boss', 'lb3509@gmail.com')
 ]
 
+APSCHEDULER_DATETIME_FORMAT = 'N j, Y, f:s a'
+APSCHEDULER_RUN_NOW_TIMEOUT = 25
 
 SITE_URL = 'http://127.0.0.1:8000'

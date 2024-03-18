@@ -107,6 +107,13 @@ class NewsDelete(PermissionRequiredMixin, DeleteView):
     context_object_name = 'news_delete'
     success_url = reverse_lazy('post_list')
 
+    def dispatch(self, request, *args, **kwargs):
+        post = self.get_object()
+        context = {'post_id': post.pk}
+        if post.author.user != self.request.user:
+            return render(self.request, template_name='post_lock.html', context=context)
+        return super(NewsDelete, self).dispatch(request, *args, **kwargs)
+
 
 class ArticlesDelete(PermissionRequiredMixin, DeleteView):
     permission_required = ('maintable.delete_post',)
@@ -124,8 +131,6 @@ class CategoryListView(ListView):
     model = Post
     template_name = 'posts/category_list.html'
     context_object_name = 'category_posts_list'
-
-
 
     def get_queryset(self):
         self.category = get_object_or_404(Category, id=self.kwargs['pk'])
@@ -156,3 +161,4 @@ def unsubscribe(request, pk):
 
     message = 'You have successfully unsubscribed from the category newsletter'
     return render(request, 'posts/subscribe.html', {'category': category, 'message': message})
+
