@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'simpleapp',
+    'board',
     'django_filters',
     'appointments',
     'django.contrib.sites',
