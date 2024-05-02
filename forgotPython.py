@@ -94,21 +94,21 @@ from random import randint
 # Unit 11
 
 
-def devide(number):
-    try:
-        x = 64 / number
-        print(x)
-    except ZeroDivisionError:
-        print('Cannot divide by 0')
+# def devide(number):
+#     try:
+#         x = 64 / number
+#         print(x)
+#     except ZeroDivisionError:
+#         print('Cannot divide by 0')
+#
+#
+# devide(5)
+# devide(1)
+# devide(0)
+# devide(2)
 
 
-devide(5)
-devide(1)
-devide(0)
-devide(2)
-
-
-
+import psycopg
 
 
 

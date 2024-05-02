@@ -4,6 +4,7 @@ from django.db.models import Sum
 from django.db.models.functions import Coalesce
 from django.urls import reverse
 from datetime import datetime
+from django.core.cache import cache
 
 
 class Author(models.Model):
@@ -48,6 +49,17 @@ class Post(models.Model):
     rating_post = models.IntegerField(default=0)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     category = models.ManyToManyField(Category, through='PostCategory')
+
+    def __str__(self):
+        return f'{self.title} {self.text_post}'
+
+    def get_absolute_url(self):
+        return f'posts/{self.id}'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete(f'post-{self.pk}')
+
 
     def like(self):
         self.rating_post += 1
